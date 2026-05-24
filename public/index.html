@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Cloud AI Support</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-container">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="sidebar-header">
+      <h2>Cloud AI</h2>
+      <button onclick="newChat()">+ New Chat</button>
+    </div>
+
+    <div id="chat-history" class="chat-history"></div>
+
+  </div>
+
+  <!-- MAIN AREA -->
+  <div class="main-container">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+
+      <div class="logo">
+        Cloud AI Support
+      </div>
+
+      <h1>
+        Customer Support<br>
+        Powered by AI ☁️
+      </h1>
+
+      <p class="description">
+        Get real-time support for cloud deployment,
+        APIs, debugging, infrastructure guidance,
+        and scalable system architecture.
+      </p>
+
+      <div class="support-card">
+
+        <img
+          src="https://i.imgur.com/6VBx3io.png"
+          alt="Support Agent"
+        />
+
+        <div>
+          <h3>Sarah Johnson</h3>
+          <p>Cloud Support Specialist</p>
+
+          <span class="online-status">
+            ● Online
+          </span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- CHAT SECTION -->
+    <div class="chat-section">
+
+      <div class="chat-header">
+        <div>
+          <h2>AI Support Assistant</h2>
+          <p>Helping you solve problems faster.</p>
+        </div>
+      </div>
+
+      <!-- CHAT BOX -->
+      <div id="chat-box" class="chat-box"></div>
+
+      <!-- QUICK REPLIES -->
+      <div class="quick-replies">
+
+        <button onclick="quickReply('deployment')">
+          🚀 Deployment
+        </button>
+
+        <button onclick="quickReply('pricing')">
+          💰 Pricing
+        </button>
+
+        <button onclick="quickReply('support')">
+          🛠 Support
+        </button>
+
+        <button onclick="quickReply('services')">
+          ☁️ Services
+        </button>
+
+      </div>
+
+      <!-- ACTIONS -->
+      <div class="chat-actions">
+        <button onclick="clearChat()">🗑 Clear Chat</button>
+      </div>
+
+      <!-- INPUT (THIS WAS BREAKING BEFORE) -->
+      <div class="input-area">
+
+        <input id="user-input" placeholder="Type your message..." />
+        <button onclick="sendMessage()">Send</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
