@@ -39,6 +39,8 @@ async function sendMessage(messageFromButton = null) {
 
     const data = await response.json();
 
+    console.log(data);
+
     removeTyping();
 
     addMessage(
