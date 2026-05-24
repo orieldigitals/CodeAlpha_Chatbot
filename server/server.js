@@ -31,8 +31,8 @@ app.post("/api/chat", (req, res) => {
   const message =
     req.body.message.toLowerCase();
 
-  let reply =
-    "I’m not fully trained on that topic yet, but I’d still love to help. Could you rephrase your question or give me a little more detail?";
+let reply =
+"I want to make sure I guide you properly 😊 Could you share a little more detail about what you're trying to achieve or the issue you're experiencing?";
 
   /* GREETING */
 
