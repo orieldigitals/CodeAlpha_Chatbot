@@ -1,4 +1,3 @@
-```javascript
 let currentChatId = null;
 let chats = {};
 
@@ -7,75 +6,40 @@ let chats = {};
 ========================= */
 
 async function sendMessage(messageFromButton = null) {
+  const input = document.getElementById("user-input");
+  if (!input) return;
 
-  const input =
-    document.getElementById("user-input");
-
-  const message =
-    messageFromButton || input.value.trim();
-
+  const message = messageFromButton || input.value.trim();
   if (!message) return;
 
-  /* ADD USER MESSAGE */
+  // ensure chat exists FIRST
+  if (!currentChatId) {
+    newChat();
+  }
 
-  addMessage(
-    message,
-    "user-message"
-  );
+  addMessage(message, "user-message");
 
   input.value = "";
 
   showTyping();
 
   try {
-
     const response = await fetch("/api/chat", {
-
       method: "POST",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        message
-      })
-
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
     });
 
-    const data =
-      await response.json();
-
-    console.log(data);
+    const data = await response.json();
 
     removeTyping();
 
-    /* HANDLE DIFFERENT RESPONSE FORMATS */
-
-    const botReply =
-      data.reply ||
-      data.response ||
-      data.message ||
-      "No response received from server.";
-
-    addMessage(
-      botReply,
-      "bot-message"
-    );
+    addMessage(data.reply, "bot-message");
 
   } catch (error) {
-
-    console.error(error);
-
     removeTyping();
-
-    addMessage(
-      "Something went wrong while connecting to the server. Please try again.",
-      "bot-message"
-    );
-
+    addMessage("Server error. Try again.", "bot-message");
   }
-
 }
 
 /* =========================
@@ -150,8 +114,6 @@ function addMessage(
 
     saveChats();
 
-    renderChatHistory();
-
   }
 
 }
@@ -164,15 +126,6 @@ function showTyping() {
 
   const chatBox =
     document.getElementById("chat-box");
-
-  const wrapper =
-    document.createElement("div");
-
-  wrapper.classList.add(
-    "message-wrapper"
-  );
-
-  wrapper.id = "typing-wrapper";
 
   const typing =
     document.createElement("div");
@@ -188,9 +141,7 @@ function showTyping() {
 
   typing.style.opacity = "0.7";
 
-  wrapper.appendChild(typing);
-
-  chatBox.appendChild(wrapper);
+  chatBox.appendChild(typing);
 
   chatBox.scrollTop =
     chatBox.scrollHeight;
@@ -199,11 +150,11 @@ function showTyping() {
 
 function removeTyping() {
 
-  const typingWrapper =
-    document.getElementById("typing-wrapper");
+  const typing =
+    document.getElementById("typing");
 
-  if (typingWrapper) {
-    typingWrapper.remove();
+  if (typing) {
+    typing.remove();
   }
 
 }
@@ -276,7 +227,6 @@ function newChat() {
   addMessage(
     "Hello 👋 I’m your AI Support Assistant. How can I help you today?",
     "bot-message",
-    true
   );
 
 }
@@ -341,8 +291,6 @@ function loadChat(id) {
 
   chatBox.innerHTML = "";
 
-  if (!chats[id]) return;
-
   chats[id].forEach(msg => {
 
     addMessage(
@@ -388,23 +336,8 @@ function clearChat() {
 ========================= */
 
 window.onload = () => {
-
   loadChats();
 
-  const keys =
-    Object.keys(chats);
-
-  if(keys.length > 0){
-
-    currentChatId = keys[0];
-
-    loadChat(currentChatId);
-
-  } else {
-
-    newChat();
-
-  }
-
+  // always start fresh chat on load
+  newChat();
 };
-```
