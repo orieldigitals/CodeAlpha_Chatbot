@@ -17,24 +17,10 @@
 
 <body>
 
-<div class="app-container">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-
-    <div class="sidebar-header">
-      <h2>Cloud AI</h2>
-      <button onclick="newChat()">+ New Chat</button>
-    </div>
-
-    <div id="chat-history" class="chat-history"></div>
-
-  </div>
-
-  <!-- MAIN AREA -->
   <div class="main-container">
 
-    <!-- LEFT PANEL -->
+    <!-- LEFT SECTION -->
+
     <div class="left-panel">
 
       <div class="logo">
@@ -72,20 +58,30 @@
 
     </div>
 
-    <!-- CHAT SECTION -->
+    <!-- RIGHT SECTION -->
+
     <div class="chat-section">
 
       <div class="chat-header">
+
         <div>
           <h2>AI Support Assistant</h2>
           <p>Helping you solve problems faster.</p>
         </div>
+
       </div>
 
-      <!-- CHAT BOX -->
-      <div id="chat-box" class="chat-box"></div>
+      <div id="chat-box" class="chat-box">
 
-      <!-- QUICK REPLIES -->
+        <div class="bot-message">
+          Hey there 👋 Welcome to Cloud AI Support.
+          I’m here to help with deployment guidance,
+          debugging, APIs, and cloud infrastructure.
+          How can I help you today?
+        </div>
+
+      </div>
+
       <div class="quick-replies">
 
         <button onclick="quickReply('deployment')">
@@ -106,16 +102,17 @@
 
       </div>
 
-      <!-- ACTIONS -->
-      <div class="chat-actions">
-        <button onclick="clearChat()">🗑 Clear Chat</button>
-      </div>
+      <div class="input-section">
 
-      <!-- INPUT (THIS WAS BREAKING BEFORE) -->
-      <div class="input-area">
+        <input
+          id="user-input"
+          type="text"
+          placeholder="Ask me anything..."
+        />
 
-        <input id="user-input" placeholder="Type your message..." />
-        <button onclick="sendMessage()">Send</button>
+        <button onclick="sendMessage()">
+          Send
+        </button>
 
       </div>
 
@@ -123,9 +120,7 @@
 
   </div>
 
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
 </body>
 </html>

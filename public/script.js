@@ -1,56 +1,36 @@
 async function sendMessage(messageFromButton = null) {
 
-  const input =
-    document.getElementById("user-input");
+  const input = document.getElementById("user-input");
 
-  const message =
-    messageFromButton || input.value.trim();
+  const message = messageFromButton || input.value.trim();
 
   if (!message) return;
 
-  /* ADD USER MESSAGE */
-
-  addMessage(
-    message,
-    "user-message"
-  );
+  addMessage(message, "user-message");
 
   input.value = "";
-
-  /* SHOW TYPING */
 
   showTyping();
 
   try {
 
-    const response =
-      await fetch("/api/chat", {
+    const response = await fetch("/api/chat", {
 
-        method: "POST",
+      method: "POST",
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-        body: JSON.stringify({
-          message
-        })
+      body: JSON.stringify({ message })
 
-      });
+    });
 
-    const data =
-      await response.json();
-
-    /* REMOVE TYPING */
+    const data = await response.json();
 
     removeTyping();
 
-    /* ADD BOT RESPONSE */
-
-    addMessage(
-      data.reply,
-      "bot-message"
-    );
+    addMessage(data.reply, "bot-message");
 
   } catch (error) {
 
@@ -60,314 +40,64 @@ async function sendMessage(messageFromButton = null) {
       "Something went wrong. Please try again.",
       "bot-message"
     );
-
-    console.error(error);
-
   }
-
 }
 
-/* ADD MESSAGE */
+function addMessage(text, className) {
 
-function addMessage(
-  text,
-  className,
-  save = true
-) {
+  const chatBox = document.getElementById("chat-box");
 
-  const chatBox =
-    document.getElementById("chat-box");
-
-  const messageWrapper =
-    document.createElement("div");
-
-  messageWrapper.classList.add(
-    "message-wrapper"
-  );
-
-  const messageDiv =
-    document.createElement("div");
+  const messageDiv = document.createElement("div");
 
   messageDiv.classList.add(className);
 
   messageDiv.innerText = text;
 
-  /* TIMESTAMP */
+  chatBox.appendChild(messageDiv);
 
-  const timestamp =
-    document.createElement("span");
-
-  timestamp.classList.add(
-    "timestamp"
-  );
-
-  const time =
-    new Date().toLocaleTimeString([], {
-
-      hour: "2-digit",
-      minute: "2-digit"
-
-    });
-
-  timestamp.innerText = time;
-
-  messageWrapper.appendChild(
-    messageDiv
-  );
-
-  messageWrapper.appendChild(
-    timestamp
-  );
-
-  chatBox.appendChild(
-    messageWrapper
-  );
-
-  chatBox.scrollTop =
-    chatBox.scrollHeight;
-
-  /* SAVE */
-
-  if (save) {
-
-    saveMessage(
-      text,
-      className,
-      time
-    );
-
-  }
-
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
-
-/* TYPING */
 
 function showTyping() {
 
-  const chatBox =
-    document.getElementById("chat-box");
+  const chatBox = document.getElementById("chat-box");
 
-  const typingWrapper =
-    document.createElement("div");
+  const typing = document.createElement("div");
 
-  typingWrapper.id =
-    "typing-wrapper";
+  typing.classList.add("bot-message");
 
-  const typing =
-    document.createElement("div");
+  typing.id = "typing";
 
-  typing.classList.add(
-    "bot-message"
-  );
+  typing.innerText = "AI Support Assistant is typing...";
 
-  typing.innerHTML = `
+  typing.style.opacity = "0.7";
 
-    <div class="typing-dots">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+  chatBox.appendChild(typing);
 
-  `;
-
-  typingWrapper.appendChild(
-    typing
-  );
-
-  chatBox.appendChild(
-    typingWrapper
-  );
-
-chatBox.scrollTo({
-  top: chatBox.scrollHeight,
-  behavior: "smooth"
-});
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
-
-/* REMOVE TYPING */
 
 function removeTyping() {
 
-  const typingWrapper =
-    document.getElementById(
-      "typing-wrapper"
-    );
+  const typing = document.getElementById("typing");
 
-  if (typingWrapper) {
-
-    typingWrapper.remove();
-
+  if (typing) {
+    typing.remove();
   }
-
 }
-
-/* QUICK REPLY */
 
 function quickReply(text) {
-
   sendMessage(text);
-
 }
 
-/* ENTER KEY */
+/* ENTER KEY SUPPORT */
 
 document
 .getElementById("user-input")
-.addEventListener(
-  "keypress",
-  function(event){
+.addEventListener("keypress", function(event){
 
-    if(event.key === "Enter"){
-
-      sendMessage();
-
-    }
-
-});
-
-/* SAVE MESSAGE */
-
-function saveMessage(
-  text,
-  className,
-  time
-){
-
-  let messages =
-
-    JSON.parse(
-
-      localStorage.getItem(
-        "chatMessages"
-      )
-
-    ) || [];
-
-  messages.push({
-
-    text,
-    className,
-    time
-
-  });
-
-  localStorage.setItem(
-
-    "chatMessages",
-
-    JSON.stringify(messages)
-
-  );
-
-}
-
-/* LOAD SAVED */
-
-function loadMessages(){
-
-  const messages =
-
-    JSON.parse(
-
-      localStorage.getItem(
-        "chatMessages"
-      )
-
-    ) || [];
-
-  messages.forEach(msg => {
-
-    const chatBox =
-      document.getElementById(
-        "chat-box"
-      );
-
-    const wrapper =
-      document.createElement("div");
-
-    wrapper.classList.add(
-      "message-wrapper"
-    );
-
-    const div =
-      document.createElement("div");
-
-    div.classList.add(
-      msg.className
-    );
-
-    div.innerText =
-      msg.text;
-
-    const timestamp =
-      document.createElement("span");
-
-    timestamp.classList.add(
-      "timestamp"
-    );
-
-    timestamp.innerText =
-      msg.time;
-
-    wrapper.appendChild(div);
-
-    wrapper.appendChild(timestamp);
-
-    chatBox.appendChild(wrapper);
-
-  });
-
-}
-
-/* ON LOAD */
-
-window.onload = () => {
-
-  loadMessages();
-
-  const savedMessages =
-
-    JSON.parse(
-
-      localStorage.getItem(
-        "chatMessages"
-      )
-
-    );
-
-  if (
-
-    !savedMessages ||
-
-    savedMessages.length === 0
-
-  ) {
-
-    addMessage(
-
-      "Hey there 👋 Welcome to Cloud AI Support. I’m here to help with deployment guidance, APIs, debugging, and scalable infrastructure support. How can I help you today?",
-
-      "bot-message"
-
-    );
-
+  if(event.key === "Enter"){
+    sendMessage();
   }
 
-};
-
-function clearChat(){
-
-  const chatBox =
-    document.getElementById("chat-box");
-
-  chatBox.innerHTML = "";
-
-  localStorage.removeItem("chatMessages");
-
-  addMessage(
-    "Chat cleared 🧹 How can I help you today?",
-    "bot-message",
-    false
-  );
-
-}
+});
