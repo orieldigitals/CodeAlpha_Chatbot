@@ -1,3 +1,4 @@
+```javascript
 let currentChatId = null;
 let chats = {};
 
@@ -7,12 +8,15 @@ let chats = {};
 
 async function sendMessage(messageFromButton = null) {
 
-  const input = document.getElementById("user-input");
+  const input =
+    document.getElementById("user-input");
 
   const message =
     messageFromButton || input.value.trim();
 
   if (!message) return;
+
+  /* ADD USER MESSAGE */
 
   addMessage(
     message,
@@ -33,22 +37,35 @@ async function sendMessage(messageFromButton = null) {
         "Content-Type": "application/json"
       },
 
-      body: JSON.stringify({ message })
+      body: JSON.stringify({
+        message
+      })
 
     });
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
     console.log(data);
 
     removeTyping();
 
+    /* HANDLE DIFFERENT RESPONSE FORMATS */
+
+    const botReply =
+      data.reply ||
+      data.response ||
+      data.message ||
+      "No response received from server.";
+
     addMessage(
-      data.reply,
+      botReply,
       "bot-message"
     );
 
   } catch (error) {
+
+    console.error(error);
 
     removeTyping();
 
@@ -148,6 +165,15 @@ function showTyping() {
   const chatBox =
     document.getElementById("chat-box");
 
+  const wrapper =
+    document.createElement("div");
+
+  wrapper.classList.add(
+    "message-wrapper"
+  );
+
+  wrapper.id = "typing-wrapper";
+
   const typing =
     document.createElement("div");
 
@@ -162,7 +188,9 @@ function showTyping() {
 
   typing.style.opacity = "0.7";
 
-  chatBox.appendChild(typing);
+  wrapper.appendChild(typing);
+
+  chatBox.appendChild(wrapper);
 
   chatBox.scrollTop =
     chatBox.scrollHeight;
@@ -171,11 +199,11 @@ function showTyping() {
 
 function removeTyping() {
 
-  const typing =
-    document.getElementById("typing");
+  const typingWrapper =
+    document.getElementById("typing-wrapper");
 
-  if (typing) {
-    typing.remove();
+  if (typingWrapper) {
+    typingWrapper.remove();
   }
 
 }
@@ -248,7 +276,7 @@ function newChat() {
   addMessage(
     "Hello 👋 I’m your AI Support Assistant. How can I help you today?",
     "bot-message",
-    false
+    true
   );
 
 }
@@ -312,6 +340,8 @@ function loadChat(id) {
     );
 
   chatBox.innerHTML = "";
+
+  if (!chats[id]) return;
 
   chats[id].forEach(msg => {
 
@@ -377,3 +407,4 @@ window.onload = () => {
   }
 
 };
+```
