@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,7 +6,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <title>Cloud AI Support</title>
+  <title>Cloud AI Support Assistant</title>
+
+  <link rel="icon" href="images/logo.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,8 +26,27 @@
 
     <div class="left-panel">
 
-      <div class="logo">
-        Cloud AI Support
+      <div class="logo" style="display:flex;align-items:center;gap:12px;">
+
+        <img
+          src="images/logo.png"
+          alt="Cloud AI Support Logo"
+          width="55"
+          height="55"
+        >
+
+        <div>
+
+          <h2 style="margin:0;">
+            Cloud AI Support Assistant
+          </h2>
+
+          <p style="margin:0;font-size:13px;opacity:.8;">
+            Cloud Computing Internship Project
+          </p>
+
+        </div>
+
       </div>
 
       <h1>
@@ -46,12 +68,19 @@
         />
 
         <div>
-          <h3>Sarah Johnson</h3>
-          <p>Cloud Support Specialist</p>
+
+          <h3>
+            Sarah Johnson
+          </h3>
+
+          <p>
+            Cloud Support Specialist
+          </p>
 
           <span class="online-status">
             ● Online
           </span>
+
         </div>
 
       </div>
@@ -65,8 +94,15 @@
       <div class="chat-header">
 
         <div>
-          <h2>AI Support Assistant</h2>
-          <p>Helping you solve problems faster.</p>
+
+          <h2>
+            AI Support Assistant
+          </h2>
+
+          <p>
+            Helping you solve problems faster.
+          </p>
+
         </div>
 
       </div>
@@ -74,10 +110,37 @@
       <div id="chat-box" class="chat-box">
 
         <div class="bot-message">
-          Hey there 👋 Welcome to Cloud AI Support.
-          I’m here to help with deployment guidance,
-          debugging, APIs, and cloud infrastructure.
+
+          👋 Welcome to Cloud AI Support Assistant.
+
+          <br><br>
+
+          I can help you with:
+
+          <br>
+
+          ☁️ Cloud Deployment
+
+          <br>
+
+          🚀 AWS Infrastructure
+
+          <br>
+
+          🔧 Debugging
+
+          <br>
+
+          🔌 API Integration
+
+          <br>
+
+          📦 DevOps Guidance
+
+          <br><br>
+
           How can I help you today?
+
         </div>
 
       </div>
@@ -107,7 +170,7 @@
         <input
           id="user-input"
           type="text"
-          placeholder="Ask me anything..."
+          placeholder="Ask me anything about Cloud Computing..."
         />
 
         <button onclick="sendMessage()">
@@ -123,4 +186,6 @@
   <script src="script.js"></script>
 
 </body>
+
 </html>
+```
