@@ -104,20 +104,6 @@ NLP integration (OpenAI / Dialogflow)
 Vector DB retrieval systems
 AI-powered generative responses
 
-UI Preview
-
-(Add screenshots of your chatbot here)
-
-
-How to Run Locally
-npm install
-npm run dev
-
-Then open:
-
-http://localhost:3000
-Author
-
 Built as part of CodeAlpha Cloud Computing Internship
 
 Learning Outcome
@@ -129,3 +115,7 @@ Cloud-ready architecture design
 REST API integration
 Frontend-backend communication
 Deployment-aware system structuring
+
+
+Github Repo: https://github.com/orieldigitals/CodeAlpha_Chatbot.git
+URL to access the application: https://codealpha-chatbot-84lb.onrender.com
